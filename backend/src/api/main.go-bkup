@@ -1,0 +1,117 @@
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"log"
+	"net/http"
+	"time"
+
+	"github.com/jackc/pgx/v5/pgxpool"
+)
+
+type User struct {
+	ID        int       `json:"id"`
+	Name      string    `json:"name"`
+	CreatedAt time.Time `json:"created_at"`
+}
+
+func main() {
+
+	dsn := "postgres://appuser:apppass@localhost:5432/appdb"
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	pool, err := pgxpool.New(ctx, dsn)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer pool.Close()
+
+	if err := pool.Ping(ctx); err != nil {
+		log.Fatal(err)
+	}
+
+	log.Println("DB connected")
+
+	// ===== GET /users =====
+	http.HandleFunc("/users", func(w http.ResponseWriter, r *http.Request) {
+
+		switch r.Method {
+
+		// -----------------
+		// SELECT (GET)
+		// -----------------
+		case http.MethodGet:
+
+			ctx, cancel := context.WithTimeout(r.Context(), 3*time.Second)
+			defer cancel()
+
+			rows, err := pool.Query(ctx,
+				`SELECT id, name, created_at
+				 FROM users
+				 ORDER BY id`)
+			if err != nil {
+				http.Error(w, err.Error(), 500)
+				return
+			}
+			defer rows.Close()
+
+			var users []User
+
+			for rows.Next() {
+				var u User
+				if err := rows.Scan(&u.ID, &u.Name, &u.CreatedAt); err != nil {
+					http.Error(w, err.Error(), 500)
+					return
+				}
+				users = append(users, u)
+			}
+
+			w.Header().Set("Content-Type", "application/json")
+			json.NewEncoder(w).Encode(users)
+
+		// -----------------
+		// INSERT (POST)
+		// -----------------
+		case http.MethodPost:
+
+			var input struct {
+				Name string `json:"name"`
+			}
+
+			if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
+				http.Error(w, "invalid json", 400)
+				return
+			}
+
+			ctx, cancel := context.WithTimeout(r.Context(), 3*time.Second)
+			defer cancel()
+
+			var user User
+
+			err := pool.QueryRow(ctx,
+				`INSERT INTO users (name)
+				 VALUES ($1)
+				 RETURNING id, name, created_at`,
+				input.Name,
+			).Scan(&user.ID, &user.Name, &user.CreatedAt)
+
+			if err != nil {
+				http.Error(w, err.Error(), 500)
+				return
+			}
+
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusCreated)
+			json.NewEncoder(w).Encode(user)
+
+		default:
+			http.Error(w, "method not allowed", 405)
+		}
+	})
+
+	log.Println("server start :8080")
+	log.Fatal(http.ListenAndServe(":8080", nil))
+}

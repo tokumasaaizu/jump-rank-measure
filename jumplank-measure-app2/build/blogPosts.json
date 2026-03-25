@@ -1,0 +1,23 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "頂点に立つのは誰だ!? 『カグラバチ』連載2周年記念「第1回人気投票」開幕!! 週刊少年ジャンプ45号かコミックス9巻帯についている応募券を貼ってハガキで応募せよ!!",
+      "link" : "https://kagurabachi.jp/",
+      "date": "2025-10-06",
+      "thumbnail": "https://www.shonenjump.com/j/img/_icon/kagurabachi.jpg",
+      "excerpt": "",
+      "category": "ニュース"
+    },
+
+    {
+      "id": 2,
+      "title": "『SAKAMOTO DAYS』アニメ化決定！",
+      "link" : "https://sakamotodays.jp/onair/season1-part2/",
+      "date": "2025-09-26",
+      "thumbnail": "https://sakamotodays.jp/c/themes/sd/assets/img/top/visual/visual7.webp",
+      "excerpt": "人気作品『SAKAMOTO DAYS』のアニメ化が決定。制作スタッフなど最新情報。",
+      "category": "ニュース"
+    }
+  ]
+}
