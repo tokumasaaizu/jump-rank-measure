@@ -60,7 +60,7 @@ func sendDiscordNotification(webhookURL, message string) {
 // 作品順位を取得するためのコードです。以下の手順で実装しています。
 func main() {
 	// 通知先のDiscord
-	webhookURL := "https://discord.com/api/webhooks/1481985851360673923/LwjRLBC6MjSRgTbME9qM6GTriJ1tNAvJj3kMA35TJmwSaYmBqPEAwiiLCNp2IvREPWJX"
+	webhookURL := "https://discord.com/api/webhooks/xxxx"
 	// 取得したいURL
 	url := "https://www.shonenjump.com/j/weeklyshonenjump/"
 
@@ -148,7 +148,7 @@ func main() {
 	req_issue, err := http.NewRequest(
 			"POST",
 			//"http://localhost:8080/issues",
-			"http://jump-rank-1195475384.ap-northeast-1.elb.amazonaws.com/issues",
+			"http://xxx(AWS ALB)",
 			bytes.NewBuffer(issueListJson),
 		)
 		if err != nil {
@@ -184,7 +184,7 @@ func main() {
 		req, err := http.NewRequest(
 			"POST",
 			//"http://localhost:8080/ranking",
-			"http://jump-rank-1195475384.ap-northeast-1.elb.amazonaws.com/ranking",
+			"http://xxx(AWS ALB)",
 			bytes.NewBuffer(jsonData),
 		)
 		if err != nil {
