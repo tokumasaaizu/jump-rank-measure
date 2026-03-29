@@ -73,7 +73,6 @@ export default function IssueRanking() {
 
   // 1. 初回マウント時に号数一覧を取得
   useEffect(() => {
-    //fetch("http://13.231.219.129:8080/issues")
     fetch("/issues")
       .then(res => res.json())
       .then((data: IssueInfo[]) => {
