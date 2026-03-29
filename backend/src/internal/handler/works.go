@@ -43,7 +43,7 @@ func (h *WorksHandler) works(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// 取得した作品のリストを JSON でレスポンスとして返します。
-		w.Header().Set("Access-Control-Allow-Origin", "*") // CORS 対策: 全てのオリジンからのアクセスを許可します。必要に応じて適切なオリジンを指定してください。
+		w.Header().Set("Access-Control-Allow-Origin", "https://jump-rank.toma39blog.com")
 		w.Header().Set("Content-Type", "application/json")
 		// HTTP ステータスコード 200 OK を設定します。
 		json.NewEncoder(w).Encode(manga)
@@ -121,7 +121,7 @@ func (h *WorksHandler) works(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// 5. レスポンス設定
-		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Origin", "https://jump-rank.toma39blog.com")
 		w.WriteHeader(http.StatusNoContent)
 
 
