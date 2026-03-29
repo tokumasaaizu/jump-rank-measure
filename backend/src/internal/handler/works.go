@@ -51,16 +51,6 @@ func (h *WorksHandler) works(w http.ResponseWriter, r *http.Request) {
 	// POST メソッドの場合は、リクエストボディからユーザーの名前を読み取り、WorkService の CreateWorks を呼び出して新しい作品を作成し、JSON でレスポンスを返します。
 	case http.MethodPost:
 
-		// リクエストボディから作品の名前を読み取るための構造体を定義します。
-		/**type Volume struct {
-			Volume      int    `json:"volume"`
-			ReleaseDate string `json:"releaseDate"`
-			CoverImage  string `json:"coverImage"`
-			Price       int    `json:"price"`
-			ISBN        string `json:"isbn"`
-			Description string `json:"description"`
-			Pages       int    `json:"pages"`
-		}*/
 		var input struct {
 			WorkID int `json:"work_id"`
 			Title  string `json:"title"`
