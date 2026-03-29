@@ -101,7 +101,6 @@ const navigate = useNavigate();
       try {
         // 漫画詳細の取得
         if (!title) return;
-        //const detailResponse = await fetch(`http://13.231.219.129:8080/work/${encodeURIComponent(title)}`);
         const detailResponse = await fetch(`/work/${encodeURIComponent(title)}`);
         const detailData = await detailResponse.json();
         //let manga = detailData.manga.find((m: MangaDetail) => m.title === title);
@@ -116,7 +115,6 @@ const navigate = useNavigate();
         
         setMangaDetail(detailData || null);
         // ランキングデータの取得
-        //fetch("http://13.231.219.129:8080/ranking")
         fetch("/ranking")
         .then((response) => response.json())
         .then((rows: RankingRow[]) => {
@@ -293,8 +291,8 @@ const navigate = useNavigate();
     // アフィリエイトコンポーネント
   const AdBanner = () => (
     <div style={{ textAlign: 'center', margin: '20px 0' }}>
-      <a href="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3500324&pid=892565429" rel="nofollow">
-        <img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3500324&pid=892565429" style={{ border: 0 }} alt="ad-banner" />
+      <a href="//ck.jp.ap.valuecommerce.com/xxxx" rel="nofollow">
+        <img src="//ad.jp.ap.valuecommerce.com/xxxx" style={{ border: 0 }} alt="ad-banner" />
       </a>
     </div>
   );
@@ -450,49 +448,6 @@ const navigate = useNavigate();
             )}
           </button>
         </div>
-
-        {/* タグセクション（キャラクター・キーワード） 
-        <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          <div>
-            <h4 style={{ fontSize: '11px', color: '#64748b', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-              主要キャラクター
-            </h4>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-
-              {["主人公名", "ライバル名", "ヒロイン名"].map((char) => (
-                <span key={char} style={{
-                  fontSize: '11px',
-                  padding: '4px 10px',
-                  backgroundColor: '#334155',
-                  color: '#f1f5f9',
-                  borderRadius: '16px', // 丸いデザイン
-                  border: '1px solid rgba(255,255,255,0.1)'
-                }}>
-                  {char}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h4 style={{ fontSize: '11px', color: '#64748b', marginBottom: '8px' }}>関連キーワード</h4>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-              {["王道バトル", "異能力", "修行", "友情"].map((tag) => (
-                <span key={tag} style={{
-                  fontSize: '10px',
-                  padding: '2px 8px',
-                  color: '#60a5fa',
-                  border: '1px solid rgba(96, 165, 250, 0.3)', // 青い枠線
-                  borderRadius: '4px', // 少し角ばったデザイン
-                  textTransform: 'uppercase'
-                }}>
-                  #{tag}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-        */}
       </section>
 
       {/* 4つのカードセクション */}
@@ -727,19 +682,6 @@ const navigate = useNavigate();
         </div>
         ))
         )}
-
-        {/* 既刊リスト（簡易版） 
-        <div style={{ marginTop: '16px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', color: '#94a3b8', padding: '8px 4px' }}>
-            <span>既刊合計</span>
-            <span style={{ color: 'white', fontWeight: 'bold' }}>108巻</span>
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', color: '#94a3b8', padding: '8px 4px' }}>
-            <span>累計発行部数</span>
-            <span style={{ color: 'white', fontWeight: 'bold' }}>5億1,000万部以上</span>
-          </div>
-        </div>
-        */}
       </section>
 
     </div>
