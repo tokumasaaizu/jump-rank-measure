@@ -30,7 +30,7 @@ func (h *RankingHandler) RegisterRoutes(r chi.Router) {
 func (h *RankingHandler) ranking(w http.ResponseWriter, r *http.Request) {
 
 	    // ===== CORS 対応 =====
-    w.Header().Set("Access-Control-Allow-Origin", "*")
+    w.Header().Set("Access-Control-Allow-Origin", "https://jump-rank.toma39blog.com")
     w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, OPTIONS")
     w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 
@@ -69,7 +69,7 @@ func (h *RankingHandler) ranking(w http.ResponseWriter, r *http.Request) {
 				http.Error(w, err.Error(), 500)
 				return
 			}
-			w.Header().Set("Access-Control-Allow-Origin", "*")
+			w.Header().Set("Access-Control-Allow-Origin", "https://jump-rank.toma39blog.com")
 			w.Header().Set("Content-Type", "application/json")
 			w.WriteHeader(http.StatusOK)
 			json.NewEncoder(w).Encode(rankings)
@@ -87,7 +87,7 @@ func (h *RankingHandler) ranking(w http.ResponseWriter, r *http.Request) {
 				http.Error(w, err.Error(), 500)
 				return
 			}
-			w.Header().Set("Access-Control-Allow-Origin", "*")
+			w.Header().Set("Access-Control-Allow-Origin", "https://jump-rank.toma39blog.com")
 			w.Header().Set("Content-Type", "application/json")
 			w.WriteHeader(http.StatusOK)
 			json.NewEncoder(w).Encode(rankings)
@@ -106,7 +106,7 @@ func (h *RankingHandler) ranking(w http.ResponseWriter, r *http.Request) {
 				http.Error(w, err.Error(), 500)
 				return
 			}
-			w.Header().Set("Access-Control-Allow-Origin", "*")
+			w.Header().Set("Access-Control-Allow-Origin", "https://jump-rank.toma39blog.com")
 			w.Header().Set("Content-Type", "application/json")
 			w.WriteHeader(http.StatusOK)
 			json.NewEncoder(w).Encode(map[string]int{"best_rank": bestRank})
@@ -125,7 +125,7 @@ func (h *RankingHandler) ranking(w http.ResponseWriter, r *http.Request) {
 				http.Error(w, err.Error(), 500)
 				return
 			}
-			w.Header().Set("Access-Control-Allow-Origin", "*")
+			w.Header().Set("Access-Control-Allow-Origin", "https://jump-rank.toma39blog.com")
 			w.Header().Set("Content-Type", "application/json")
 			w.WriteHeader(http.StatusOK)
 			json.NewEncoder(w).Encode(map[string]int{"worst_rank": worstRank})
@@ -147,7 +147,7 @@ func (h *RankingHandler) ranking(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// 取得したランキングのリストを JSON でレスポンスとして返します。
-		w.Header().Set("Access-Control-Allow-Origin", "*") // CORS 対策: 全てのオリジンからのアクセスを許可します。必要に応じて適切なオリジンを指定してください。
+		w.Header().Set("Access-Control-Allow-Origin", "https://jump-rank.toma39blog.com")
 		w.Header().Set("Content-Type", "application/json")
 		// HTTP ステータスコード 200 OK を設定します。
 		w.WriteHeader(http.StatusOK)
@@ -176,7 +176,7 @@ func (h *RankingHandler) ranking(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Origin", "https://jump-rank.toma39blog.com")
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusCreated)
 		// 作成したランキングを JSON でレスポンスとして返します。
@@ -223,7 +223,7 @@ func (h *RankingHandler) ranking(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Origin", "https://jump-rank.toma39blog.com")
 		w.WriteHeader(http.StatusNoContent)
 		
 
