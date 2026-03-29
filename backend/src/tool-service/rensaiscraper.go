@@ -224,11 +224,7 @@ func main() {
 					}
 				}
 
-				// 発売日
-				//vol.ReleaseDate = s.Find(".date").Text()
-
-				// 価格
-				/**priceText := s.Find(".price").Text()
+				
 				priceText = strings.ReplaceAll(priceText, "円", "")
 				priceText = strings.ReplaceAll(priceText, ",", "")
 				price, _ := strconv.Atoi(priceText)
@@ -241,39 +237,12 @@ func main() {
 
 	})
 
-	// JSONへ変換（整形付き）
-	//jsonData, err := json.MarshalIndent(mangaList, "", "  ")
-	//if err != nil {
-		//log.Fatal(err)
-	//}
 
-	
-	client := &http.Client{}
-
-
-	// 1. POST処理の前に end_flg を false にする PUT リクエスト
-	/**resetReq, err := http.NewRequest(
-		"PUT", 
-		"http://localhost:8080/works",
-		nil,
-	)
-	if err != nil {
-		log.Fatal("Failed to create PUT request:", err)
-	}
-
-	resetResp, err := client.Do(resetReq)
-	if err != nil {
-		log.Println("PUT error:", err)
-	} else {
-		defer resetResp.Body.Close()
-		fmt.Printf("Initial PUT Status=%s\n", resetResp.Status)
-	}*/
 
 
 	// --- ここから POST 処理 ---
 	var importedTitles []string
 	for _, manga := range(mangaList) {
-		//http.Post("http://localhost:8080/works", "application/json", strings.NewReader(string(manga)))
 		// 1件だけJSONに変換
 		jsonData, err := json.Marshal(manga)
 		if err != nil {
@@ -284,8 +253,7 @@ func main() {
 
 		req, err := http.NewRequest(
 			"POST",
-			//"http://localhost:8080/works",
-			"http://jump-rank-1195475384.ap-northeast-1.elb.amazonaws.com/works",
+			"http://xxx(AWS ALB)",
 			bytes.NewBuffer(jsonData),
 		)
 		if err != nil {
@@ -304,11 +272,6 @@ func main() {
 		//body, _ := io.ReadAll(resp.Body)
 		resp.Body.Close()
 
-		//fmt.Printf("POST  Status=%s Response=%s\n",
-			//resp.Status,
-			//string(body),
-		//)
-
 	}
 
 	// 1. サーバー側の struct と一致する形式でデータをラップする
@@ -326,8 +289,7 @@ func main() {
 	}
 	resetReq, err := http.NewRequest(
 		"PUT", 
-		//"http://localhost:8080/works",
-		"http://jump-rank-1195475384.ap-northeast-1.elb.amazonaws.com/works",
+		"http://xxx(AWS ALB)",
 		bytes.NewBuffer(jsonImportedTitles),
 	)
 	if err != nil {
@@ -356,8 +318,7 @@ func main() {
 		
 		req, err := http.NewRequest(
 			"POST",
-			//"http://localhost:8080/volumes",
-			"http://jump-rank-1195475384.ap-northeast-1.elb.amazonaws.com/volumes",
+			"http://xxx(AWS ALB)",
 			bytes.NewBuffer(jsonVolumeData),
 		)
 		if err != nil {
@@ -380,15 +341,5 @@ func main() {
 	}
 
 
-	// ⑥ ファイルにも保存
-	//file, err := os.Create("manga_rensai_list.json")
-	//if err != nil {
-		//log.Fatal(err)
-	//}
-	//defer file.Close()
-
-	//file.Write(jsonData)
-
-	//fmt.Println("manga_rensai_list.json に保存しました")
 
 }
