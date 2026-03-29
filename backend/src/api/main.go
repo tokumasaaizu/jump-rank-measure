@@ -23,11 +23,11 @@ import (
 func main() {
 
 
-	host := "postgre.cjocsycgq4mo.ap-northeast-1.rds.amazonaws.com"
-	port := "5432"
-	user := "tokumin"
-	pass := "masayuki7919"
-	dbname := "postgres"
+	host := "postgre.xxxx.amazonaws.com"
+	port := "xxxx"
+	user := "xxxx"
+	pass := "xxxx"
+	dbname := "xxxx"
 	
 	// 2. 接続文字列の構築
 	// RDSではセキュリティのため sslmode=verify-full または require が推奨されます
@@ -35,8 +35,6 @@ func main() {
 		user, pass, host, port, dbname)
 
 
-	//dsn := "postgres://appuser:apppass@localhost:5432/appdb"
-	//dsn := "postgres://appuser:apppass@host.docker.internal:5432/appdb"
 	// DB接続プールの作成(DB接続の初期化)
 	pool, err := db.NewPostgresPool(dsn)
 	if err != nil {
@@ -44,11 +42,6 @@ func main() {
 	}
 	// プールは使い終わったらクローズする必要があります。defer を使って main 関数の最後でクローズするようにします。
 	defer pool.Close()
-
-	// リポジトリ、サービス、ハンドラーの初期化(user)
-	//userRepo := repository.NewUserRepository(pool)
-	//userService := service.NewUserService(userRepo)
-	//userHandler := handler.NewUserHandler(userService)
 
 	worksRepo := repository.NewWorksRepository(pool)
 	rankingRepo := repository.NewRankingRepository(pool)
@@ -67,10 +60,7 @@ func main() {
 	issueHandler := handler.NewIssueHandler(issueService)
 
 	// ルーティング登録(HTTPリクエストとハンドラーの紐付け)
-	//userHandler.RegisterRoutes()
-	//worksHandler.RegisterRoutes()
 	r := chi.NewRouter()
-	//userHandler.RegisterRoutes(r)
 	worksHandler.RegisterRoutes(r)
 	workDetailHandler.RegisterRoutes(r)
 	rankingHandler.RegisterRoutes(r)
