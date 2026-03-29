@@ -53,7 +53,6 @@ export default function JumpDashboard() {
   
     useEffect(() => {
       //fetch("/past-ranking-data.csv")
-      //fetch("https://13.231.219.129:8080/ranking")
       fetch("/ranking")
         .then((response) => response.json())
         .then((rows: RankingRow[]) => {
@@ -136,7 +135,6 @@ export default function JumpDashboard() {
         }); // then
 
   
-      //fetch("https://13.231.219.129:8080/ranking?latest=true")
       fetch("/ranking?latest=true")
         .then((response)=>response.json())
         .then((jsonData)=>{
