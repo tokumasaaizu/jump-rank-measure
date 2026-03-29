@@ -34,7 +34,7 @@ func (h *WorkDetailHandler) GetWorkByTitle(w http.ResponseWriter, r *http.Reques
 	}
 
 
-	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Origin", "https://jump-rank.toma39blog.com")
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(work)
 }
