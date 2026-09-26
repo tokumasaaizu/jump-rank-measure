@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box, Container, Typography, Divider } from '@mui/material';
-import { Link, useLocation } from 'react-router-dom';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -30,25 +29,6 @@ const Footer: React.FC = () => {
           >
             © {currentYear} Jump Rank Measure. All rights reserved.
           </Typography>
-          
-          <Box sx={{ mt:3 }}>
-            <Link
-              to={"/privacy"}
-              //href="/privacy"
-              color="inherit"
-              //sx={{ mx: 1 }}
-              style={{ marginRight:20, color: "white", textDecoration: "none" }}
-            >
-              プライバシーポリシー
-            </Link>
-            <Link
-              to={"/terms"}
-              color="inherit"
-              style={{ marginLeft: 30, marginRight:20, color: "white", textDecoration: "none" }}
-            >
-              利用規約
-            </Link>
-          </Box>
         </Box>
       </Container>
     </Box>

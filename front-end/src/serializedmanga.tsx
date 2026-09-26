@@ -12,7 +12,6 @@ import {
 import { 
   Home, List, BookOpen, Database, Menu, X, ChevronLeft, ChevronRight, ArrowRight, ChevronDown 
 } from 'lucide-react';
-import HomeHeaderNavi from './components/Nav/seriespageheader';
 import Grid from '@mui/material/Grid';
 import Footer from "./components/Footer/footer";
 import { Link as RouterLink } from 'react-router-dom';

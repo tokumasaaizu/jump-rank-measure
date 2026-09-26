@@ -1,16 +1,11 @@
 import { Routes, Route } from "react-router-dom"; // 追加
 import React, { useState } from 'react';
 import Home from './home';
-import News from './news';
 import SerializedManga from "./serializedmanga";
 import DetailPage from "./detailpage";
-import AdminRankingPage from "./rankingedit";
-import PrivacyPolicy from "./privacy";
-import TermsOfService from "./termsofservice";
 import IssueRanking from "./issueRanking";
 import NotFound from "./NotFound";
 import App from "./App.tsx";
-import App2 from "./App2.tsx";
 import Top from "./Top.tsx";
 
 function RouteBasic () {
@@ -32,13 +27,9 @@ function RouteBasic () {
                  */}
                 <Route path="/" element={ <Top /> } />
                 <Route path="/home" element={ <Home /> } />
-                <Route path="/news" element={ <News /> } />
                 <Route path="/series" element={ <SerializedManga /> } />
                 <Route path="/detail" element={ <DetailPage /> } />
-                <Route path="/privacy" element={ <PrivacyPolicy /> } />
-                <Route path="/terms" element={ <TermsOfService /> } />
                 <Route path="/issue" element={ <IssueRanking /> } />
-                <Route path="/admin" element={ <AdminRankingPage /> } />
                 <Route path="*" element={<NotFound />} />
                 
             </Routes>

@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import reportWebVitals from './reportWebVitals';
 import {RouterProvider, BrowserRouter} from 'react-router-dom';
 import './index.css';
 import RouteBasicver from './routeBasic.js';
@@ -18,5 +17,3 @@ root.render(
         <RouteBasicver />
     </BrowserRouter>
 );
-
-reportWebVitals();
