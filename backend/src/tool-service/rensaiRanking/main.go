@@ -9,7 +9,7 @@ import (
 	"bytes"
 	"strconv"
 	"io"
-	//"os"
+	"os"
 	"strings"
 	"github.com/PuerkitoBio/goquery"
 )
@@ -60,7 +60,9 @@ func sendDiscordNotification(webhookURL, message string) {
 // 作品順位を取得するためのコードです。以下の手順で実装しています。
 func main() {
 	// 通知先のDiscord
-	webhookURL := "https://discord.com/api/webhooks/xxxx"
+	webhookURL := getenv("DISCORD_WEBHOOK_URL", "https://discord.com/api/webhooks/xxxx")
+	// 送信先の API (ローカルでは API_BASE_URL=http://localhost:8080)
+	apiBaseURL := getenv("API_BASE_URL", "http://xxx(AWS ALB)")
 	// 取得したいURL
 	url := "https://www.shonenjump.com/j/weeklyshonenjump/"
 
@@ -147,8 +149,7 @@ func main() {
 	}
 	req_issue, err := http.NewRequest(
 			"POST",
-			//"http://localhost:8080/issues",
-			"http://xxx(AWS ALB)",
+			apiBaseURL+"/issues",
 			bytes.NewBuffer(issueListJson),
 		)
 		if err != nil {
@@ -183,8 +184,7 @@ func main() {
 
 		req, err := http.NewRequest(
 			"POST",
-			//"http://localhost:8080/ranking",
-			"http://xxx(AWS ALB)",
+			apiBaseURL+"/ranking",
 			bytes.NewBuffer(jsonData),
 		)
 		if err != nil {
@@ -209,4 +209,12 @@ func main() {
 	notificationMsg := fmt.Sprintf("🤖 **連載順位をアプリに反映完了**\n対象: %s\nURL: https://jump-rank.toma39blog.com/jumprank/home\nステータス: 正常終了", issue_label)
 	sendDiscordNotification(webhookURL, notificationMsg)
 
+}
+
+// getenv は環境変数 key の値を返します。未設定なら fallback を返します。
+func getenv(key, fallback string) string {
+	if v, ok := os.LookupEnv(key); ok {
+		return v
+	}
+	return fallback
 }

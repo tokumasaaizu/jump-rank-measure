@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"fmt"
+	"os"
 	"github.com/go-chi/chi/v5"
 	// ここでは、DB接続の初期化、リポジトリ、サービス、ハンドラーの初期化、ルーティング登録、サーバ起動などを行います。
 	// backend という名前は go.mod で定義されているモジュール名です。
@@ -23,16 +24,19 @@ import (
 func main() {
 
 
-	host := "postgre.xxxx.amazonaws.com"
-	port := "xxxx"
-	user := "xxxx"
-	pass := "xxxx"
-	dbname := "xxxx"
-	
+	// 環境変数があればそれを使い、なければ本番(RDS)向けの値を使う
+	host := getenv("DB_HOST", "postgre.xxxx.amazonaws.com")
+	port := getenv("DB_PORT", "xxxx")
+	user := getenv("DB_USER", "xxxx")
+	pass := getenv("DB_PASSWORD", "xxxx")
+	dbname := getenv("DB_NAME", "xxxx")
+	// ローカルの PostgreSQL では DB_SSL_PARAMS="sslmode=disable" を指定する
+	sslParams := getenv("DB_SSL_PARAMS", "sslmode=verify-full&sslrootcert=/app/global-bundle.pem")
+
 	// 2. 接続文字列の構築
 	// RDSではセキュリティのため sslmode=verify-full または require が推奨されます
-	dsn := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=verify-full&sslrootcert=/app/global-bundle.pem",
-		user, pass, host, port, dbname)
+	dsn := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?%s",
+		user, pass, host, port, dbname, sslParams)
 
 
 	// DB接続プールの作成(DB接続の初期化)
@@ -70,4 +74,12 @@ func main() {
 	log.Println("server start :8080")
 	// サーバ起動
 	log.Fatal(http.ListenAndServe(":8080", r))
+}
+
+// getenv は環境変数 key の値を返します。未設定なら fallback を返します。
+func getenv(key, fallback string) string {
+	if v, ok := os.LookupEnv(key); ok {
+		return v
+	}
+	return fallback
 }

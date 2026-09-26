@@ -4,9 +4,11 @@ package repository
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"time"
 
+	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -190,6 +192,10 @@ func (r *RankingRepository) GetPastRank(ctx context.Context, title string) (int,
 		 WHERE work_id = (SELECT work_id FROM works WHERE title = $1)
 		 ORDER BY r.issue_id DESC LIMIT 1`, title,
 	).Scan(&rankNow)
+	// まだ一度も順位が登録されていない作品は 0 を返す
+	if errors.Is(err, pgx.ErrNoRows) {
+		return 0, nil
+	}
 	/**
 	err := r.pool.QueryRow(ctx,
 		`UPDATE ranking
@@ -253,7 +259,7 @@ func (r *RankingRepository) Create(ctx context.Context, title string, rank int, 
 			(SELECT issue_id FROM issues WHERE issue_label LIKE '%' || $3 || '%'),
 			$4
 		)
-		RETURNING ranking_id, work_id, issue_id, rank_num, created_at`,
+		RETURNING ranking_id, work_id, issue_id, rank_num, created_at, rank_change`,
 		title, rank, issueLabel, isNewRecord,
 	).Scan(
 		&newRanking.RankingID,

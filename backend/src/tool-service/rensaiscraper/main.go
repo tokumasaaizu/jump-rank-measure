@@ -9,7 +9,7 @@ import (
 	"bytes"
 	//"io"
 	"strings"
-	//"os"
+	"os"
 	"strconv"
 
 	"github.com/PuerkitoBio/goquery"
@@ -57,6 +57,8 @@ func removeSpacesAndNewlines(s string) string {
 func main() {
 	// 取得したいURL
 	url := "https://www.shonenjump.com/j/rensai/"
+	// 送信先の API (ローカルでは API_BASE_URL=http://localhost:8080)
+	apiBaseURL := getenv("API_BASE_URL", "http://xxx(AWS ALB)")
 
 	// ① HTTPでページを取得(HTTP GETリクエスト)
 	//まず対象ページに GET リクエストを送っています。エラー処理を忘れないようにします。
@@ -224,11 +226,6 @@ func main() {
 					}
 				}
 
-				
-				priceText = strings.ReplaceAll(priceText, "円", "")
-				priceText = strings.ReplaceAll(priceText, ",", "")
-				price, _ := strconv.Atoi(priceText)
-				vol.Price = price*/
 
 				volumes = append(volumes, vol)
 			})
@@ -239,6 +236,8 @@ func main() {
 
 
 
+
+	client := &http.Client{}
 
 	// --- ここから POST 処理 ---
 	var importedTitles []string
@@ -253,7 +252,7 @@ func main() {
 
 		req, err := http.NewRequest(
 			"POST",
-			"http://xxx(AWS ALB)",
+			apiBaseURL+"/works",
 			bytes.NewBuffer(jsonData),
 		)
 		if err != nil {
@@ -289,7 +288,7 @@ func main() {
 	}
 	resetReq, err := http.NewRequest(
 		"PUT", 
-		"http://xxx(AWS ALB)",
+		apiBaseURL+"/works",
 		bytes.NewBuffer(jsonImportedTitles),
 	)
 	if err != nil {
@@ -318,7 +317,7 @@ func main() {
 		
 		req, err := http.NewRequest(
 			"POST",
-			"http://xxx(AWS ALB)",
+			apiBaseURL+"/volumes",
 			bytes.NewBuffer(jsonVolumeData),
 		)
 		if err != nil {
@@ -342,4 +341,12 @@ func main() {
 
 
 
+}
+
+// getenv は環境変数 key の値を返します。未設定なら fallback を返します。
+func getenv(key, fallback string) string {
+	if v, ok := os.LookupEnv(key); ok {
+		return v
+	}
+	return fallback
 }

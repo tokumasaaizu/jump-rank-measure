@@ -46,7 +46,7 @@ func (r *VolumeRepository) CreateVolume(ctx context.Context, v model.Volume) (mo
 		 (SELECT work_id FROM works WHERE title LIKE '%' || $1 || '%'), 
 		 $2, $3, $4, $5, $6, $7, $8, $9)
 		 ON CONFLICT (work_id, volume) DO NOTHING
-		 RETURNING volume, release_date, coverimage, price, isbn, description, pages`,
+		 RETURNING volume, release_date, coverimage, price, isbn, description, pages, volume_link`,
 		v.Title, v.Volume, v.ReleaseDate, v.CoverImage, v.Price, v.ISBN, v.Description, v.Pages, v.VolumeLink,
 	).Scan(&createdVolume.Volume, &createdVolume.ReleaseDate, &createdVolume.CoverImage,
 		&createdVolume.Price, &createdVolume.ISBN, &createdVolume.Description, &createdVolume.Pages, &createdVolume.VolumeLink)
